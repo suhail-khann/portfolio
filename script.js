@@ -1,96 +1,105 @@
+// Matrix animation setup
 const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = [];
+let hue = 120; // Starting with green
+
+for (let i = 0; i < columns; i++) {
+    drops[i] = 1;
+}
+
+function drawMatrix() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = characters.charAt(Math.floor(Math.random() * characters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
         }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        drops[i]++;
+    }
 
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = [];
-        let hue = 120; // Starting with green
+    // Slowly shift hue for color variation
+    hue = (hue + 0.1) % 360;
+}
 
-        for (let i = 0; i < columns; i++) {
-            drops[i] = 1;
-        }
+setInterval(drawMatrix, 50);
 
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+// Wait for DOM to be fully loaded before initializing
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS animations
+    AOS.init({
+        duration: 1000,
+        once: false,
+        mirror: true,
+        offset: 100
+    });
 
-            ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-            ctx.font = fontSize + 'px monospace';
+    // Smooth scroll with enhanced easing
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (!target) return; // Guard clause if target doesn't exist
+            
+            const startPosition = window.pageYOffset;
+            const targetPosition = target.getBoundingClientRect().top + startPosition;
+            const startTime = performance.now();
+            const duration = 1000;
 
-            for (let i = 0; i < drops.length; i++) {
-                const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            function animation(currentTime) {
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+                const ease = t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+                
+                window.scrollTo(0, startPosition + (targetPosition - startPosition) * ease(progress));
 
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
+                if (progress < 1) {
+                    requestAnimationFrame(animation);
                 }
-                drops[i]++;
             }
 
-            // Slowly shift hue for color variation
-            hue = (hue + 0.1) % 360;
-        }
-
-        setInterval(drawMatrix, 50);
-
-        // Enhanced scroll animations
-        AOS.init({
-            duration: 1000,
-            once: false,
-            mirror: true,
-            offset: 100
+            requestAnimationFrame(animation);
         });
+    });
 
-        // Smooth scroll with enhanced easing
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                const startPosition = window.pageYOffset;
-                const targetPosition = target.getBoundingClientRect().top + startPosition;
-                const startTime = performance.now();
-                const duration = 1000;
+    // Enhanced navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (!navbar) return; // Guard clause
+        
+        const scrolled = window.scrollY > 50;
+        
+        navbar.style.background = scrolled ? 
+            'rgba(0, 20, 0, 0.95)' : 
+            'rgba(0, 20, 0, 0.8)';
+        
+        navbar.style.boxShadow = scrolled ?
+            '0 0 20px rgba(0, 255, 0, 0.1)' :
+            'none';
+    });
 
-                function animation(currentTime) {
-                    const timeElapsed = currentTime - startTime;
-                    const progress = Math.min(timeElapsed / duration, 1);
-                    const ease = t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-                    
-                    window.scrollTo(0, startPosition + (targetPosition - startPosition) * ease(progress));
-
-                    if (progress < 1) {
-                        requestAnimationFrame(animation);
-                    }
-                }
-
-                requestAnimationFrame(animation);
-            });
-        });
-
-        // Enhanced navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            const scrolled = window.scrollY > 50;
-            
-            navbar.style.background = scrolled ? 
-                'rgba(0, 20, 0, 0.95)' : 
-                'rgba(0, 20, 0, 0.8)';
-            
-            navbar.style.boxShadow = scrolled ?
-                '0 0 20px rgba(0, 255, 0, 0.1)' :
-                'none';
-        });
-
-        // Enhanced form submission with validation
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+    // Enhanced form submission with validation
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             const formElements = this.elements;
@@ -106,6 +115,12 @@ const canvas = document.getElementById('matrixCanvas');
             }
         
             if (isValid) {
+                // Show loading indicator
+                const submitButton = this.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitButton.disabled = true;
+                
                 // Get form data
                 const name = this.querySelector('input[type="text"]').value;
                 const email = this.querySelector('input[type="email"]').value;
@@ -124,55 +139,69 @@ const canvas = document.getElementById('matrixCanvas');
                     function(response) {
                         alert('Thank you for your message! I will get back to you soon.');
                         document.getElementById('contactForm').reset();
+                        // Reset button
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
                     },
                     function(error) {
                         alert('Sorry, there was an error sending your message. Please try again later.');
                         console.error('EmailJS error:', error);
+                        // Reset button
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
                     }
                 );
             }
         });
+    }
 
+    // Dynamic year in footer
+    const footerP = document.querySelector('footer p');
+    if (footerP) {
+        footerP.innerHTML = `&copy; ${new Date().getFullYear()} Suhail Khan. All rights reserved.`;
+    }
 
-        // Dynamic year in footer
-        document.querySelector('footer p').innerHTML = 
-            `&copy; ${new Date().getFullYear()} Suhail Khan. All rights reserved.`;
-
-        // Particle effect configuration
-        const particlesConfig = {
-            particles: {
-                number: { value: 80 },
-                color: { value: "#00ff00" },
-                shape: { type: "char", character: ["0", "1"] },
-                opacity: { value: 0.5 },
-                size: { value: 10 },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    outModes: { default: "out" }
-                }
+    // Particle effect configuration
+    const particlesConfig = {
+        particles: {
+            number: { value: 80 },
+            color: { value: "#00ff00" },
+            shape: { type: "char", character: ["0", "1"] },
+            opacity: { value: 0.5 },
+            size: { value: 10 },
+            move: {
+                enable: true,
+                speed: 2,
+                direction: "none",
+                random: true,
+                straight: false,
+                outModes: { default: "out" }
             }
-        };
-
-        // Initialize particles if available
-        if (typeof particlesJS !== 'undefined') {
-            particlesJS('matrixCanvas', particlesConfig);
         }
+    };
 
-        function showImage() {
-            document.getElementById("SIH-image").style.display = "block";
-          }
+    // Initialize particles if available
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS('matrixCanvas', particlesConfig);
+    }
 
-          function showImage2() {
-            document.getElementById("encrypt-image").style.display = "block";
-          }
+    // Image display functions
+    window.showImage = function() {
+        const sihImage = document.getElementById("SIH-image");
+        if (sihImage) sihImage.style.display = "block";
+    }
 
-          const aboutSection = document.querySelector('.about');
-          const lockContainer = document.querySelector('.lock-container');
-          const observer = new IntersectionObserver((entries) => {
+    window.showImage2 = function() {
+        const encryptImage = document.getElementById("encrypt-image");
+        if (encryptImage) encryptImage.style.display = "block";
+    }
+
+    // About section animation
+    const aboutSection = document.querySelector('.about');
+    const lockContainer = document.querySelector('.lock-container');
+    
+    if (aboutSection && lockContainer) {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     lockContainer.classList.add('unlock-animation');
@@ -181,137 +210,107 @@ const canvas = document.getElementById('matrixCanvas');
                 }
             });
         }, { threshold: 0.5 });
-    
+        
         observer.observe(aboutSection);
-        
+    }
 
+    // Mobile menu toggle functionality
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function(event) {
+            navLinks.classList.toggle('active');
+            event.stopPropagation(); // Stop event from bubbling up to document
+        });
         
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add this code at the beginning of your script.js file
-            document.addEventListener('DOMContentLoaded', function() {
-                // Mobile menu toggle functionality
-                const menuToggle = document.querySelector('.mobile-menu-toggle');
-                const navLinks = document.querySelector('.nav-links');
-                
-                if (menuToggle && navLinks) {
-                    menuToggle.addEventListener('click', function() {
-                        navLinks.classList.toggle('active');
-                    });
-                    
-                    // Close menu when a link is clicked
-                    navLinks.querySelectorAll('a').forEach(link => {
-                        link.addEventListener('click', function() {
-                            navLinks.classList.remove('active');
-                        });
-                    });
-                }
-                
-                // Close menu when clicking outside
-                document.addEventListener('click', function(event) {
-                    if (!event.target.closest('.nav-links') && 
-                        !event.target.closest('.mobile-menu-toggle') && 
-                        navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                    }
-                });
-                
-                // Your existing code continues below...
+        // Close menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
             });
-            const computer = document.getElementById('computer');
-            const matrixCanvas = document.getElementById('matrixCanvas');
-            const mainContent = document.getElementById('mainContent');
-        
-            computer.addEventListener('click', function() {
-                // Add zoom effect to computer
-                this.classList.add('zoom-effect');
-                
-                // Show matrix animation
+        });
+    }
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.nav-links') && 
+            !event.target.closest('.mobile-menu-toggle') && 
+            navLinks && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+        }
+    });
+    
+    // Computer intro animation
+    const computer = document.getElementById('computer');
+    if (computer) {
+        computer.addEventListener('click', function() {
+            // Add zoom effect to computer
+            this.classList.add('zoom-effect');
+            
+            // Show matrix animation
+            const introContainer = document.querySelector('.intro-container');
+            if (introContainer) {
                 setTimeout(() => {
-                    document.querySelector('.intro-container').classList.add('hide-intro');
-                    matrixCanvas.classList.add('show-matrix-entry');
+                    introContainer.classList.add('hide-intro');
+                    if (canvas) canvas.classList.add('show-matrix-entry');
                     
                     // Show main content after matrix effect
+                    const mainContent = document.querySelector('main') || document.body;
                     setTimeout(() => {
-                        mainContent.classList.add('show-content');
-                        matrixCanvas.style.opacity = '0.3'; // Reduce matrix opacity
+                        if (mainContent) mainContent.classList.add('show-content');
+                        if (canvas) canvas.style.opacity = '0.3'; // Reduce matrix opacity
                     }, 1500);
                 }, 1000);
-            });
-        
-            // Your existing matrix animation code
-            const ctx = matrixCanvas.getContext('2d');
-            
-            function resizeCanvas() {
-                matrixCanvas.width = window.innerWidth;
-                matrixCanvas.height = window.innerHeight;
             }
-            
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-            
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$%^&*()_+-=[]{}|;:,.<>?/\\';
-            const fontSize = 14;
-            let drops = [];
-            
-            function initializeDrops() {
-                const columns = Math.floor(matrixCanvas.width / fontSize);
-                drops = [];
-                for (let i = 0; i < columns; i++) {
-                    drops[i] = Math.floor(Math.random() * -100);
-                }
-            }
-            
-            
-            function animate() {
-                drawMatrix();
-                requestAnimationFrame(animate);
-            }
-            
-            // Start matrix animation
-            animate();
-        
-            // Your existing JavaScript code continues below...
         });
-        function toggleCertificate(certId) {
-            const container = document.getElementById(certId);
-            if (container) {
-                container.classList.toggle('show');
-            }
+    }
+
+    // Certificate toggle functionality
+    window.toggleCertificate = function(certId) {
+        const container = document.getElementById(certId);
+        if (container) {
+            container.classList.toggle('show');
         }
+    }
 
-        // Add modal functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Create modal container
-            const modal = document.createElement('div');
-            modal.className = 'certificate-modal';
-            modal.innerHTML = `
-                <span class="modal-close">&times;</span>
-                <img class="modal-content">
-            `;
-            document.body.appendChild(modal);
+    // Add modal functionality for certificates
+    // Create modal container
+    const modal = document.createElement('div');
+    modal.className = 'certificate-modal';
+    modal.innerHTML = `
+        <span class="modal-close">&times;</span>
+        <img class="modal-content">
+    `;
+    document.body.appendChild(modal);
 
-            // Add click handlers to all certificate images
-            document.querySelectorAll('.certification-images').forEach(img => {
-                img.addEventListener('click', function(e) {
-                    const modalImg = modal.querySelector('.modal-content');
-                    modalImg.src = this.src;
-                    modal.classList.add('show');
-                    e.stopPropagation();
-                });
-            });
-
-            // Close modal on click outside or close button
-            modal.addEventListener('click', function() {
-                this.classList.remove('show');
-            });
-
-            modal.querySelector('.modal-close').addEventListener('click', function(e) {
-                modal.classList.remove('show');
-                e.stopPropagation();
-            });
+    // Add click handlers to all certificate images
+    document.querySelectorAll('.certification-images').forEach(img => {
+        img.addEventListener('click', function(e) {
+            const modalImg = modal.querySelector('.modal-content');
+            modalImg.src = this.src;
+            modal.classList.add('show');
+            e.stopPropagation();
         });
+    });
 
-        document.querySelector('.download-btn').addEventListener('click', function(e) {
+    // Close modal on click outside or close button
+    modal.addEventListener('click', function() {
+        this.classList.remove('show');
+    });
+
+    const modalClose = modal.querySelector('.modal-close');
+    if (modalClose) {
+        modalClose.addEventListener('click', function(e) {
+            modal.classList.remove('show');
+            e.stopPropagation();
+        });
+    }
+
+    // Resume download functionality
+    const downloadBtn = document.querySelector('.download-btn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', function(e) {
             const link = document.createElement('a');
             link.href = 'resume.pdf';
             link.download = 'resume.pdf';
@@ -319,4 +318,5 @@ const canvas = document.getElementById('matrixCanvas');
             link.click();
             document.body.removeChild(link);
         });
-        
+    }
+});
