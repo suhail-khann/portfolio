@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suhail Khan - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("ZPqqnNy8rM7bEmcTx"); // Your EmailJS public key
+        })();
+    </script>
+</head>
+<body>
+    <body>
+        <!-- Intro Animation Container -->
+        <div class="intro-container">
+            <div class="computer" id="computer">
+                <div class="screen">
+                    <div class="screen-content">
+                        <i class="fas fa-power-off"></i>
+                        <p>Click to Enter</p>
+                    </div>
+                </div>
+                <div class="power-button"></div>
+                <div class="power-led"></div>
+            </div>
+        </div>
+    <canvas id="matrixCanvas"></canvas>
+
+
+    
+    <nav class="navbar">
+        <div class="logo">SK</div>
+        <div class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#experience">Experience</a>
+            <a href="#certifications">Certifications</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <img src="image.jpeg"  id="profile">
+            <h1>Suhail Khan</h1>
+            <h2>Full-Stack Developer & Cybersecurity Enthusiast</h2>
+            <div class="resume-download">
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    Download Resume
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2 class="section-title" data-aos="fade-up">About Me</h2>
+        <div class="lock-container">
+            <div class="lock">
+                <div class="keyhole"></div>
+                <div class="shackle"></div>
+            </div>
+            <div class="key">
+                <div class="key-head"></div>
+                <div class="key-shaft"></div>
+                <div class="key-teeth"></div>
+            </div>
+        </div>
+        <div class="about-content" data-aos="fade-up">
+            <p>I am a passionate Full-Stack Developer and Cybersecurity Enthusiast with expertise in building scalable and innovative solutions. My projects span blockchain, AI, NLP, IoT, and cloud computing, showcasing my ability to merge cutting-edge technologies. As a Google Developer Student Clubs Core Plus Member, DevTown Campus Ambassador, and Forum Coordinator at GM Institute of Technology, I actively contribute to tech communities.</p>
+        </div>
+        
+    </section>
+
+    <section id="projects" class="projects">
+        <h2 class="section-title" data-aos="fade-up">Projects</h2>
+        <div class="project-grid">
+            <div class="project-card" data-aos="fade-up">
+                <h3>PGMU SOVT</h3>
+                <p>Official website for GM University's School of Vocational Training</p>
+                <div class="tech-stack">
+                    <span>HTML</span>
+                    <span>CSS</span>
+                    <span>JavaScript</span>
+                    <span>PHP</span>
+                    <span>MongoDB</span>
+                </div>
+            </div>
+
+            <div class="project-card" data-aos="fade-up">
+                <h3>Smart City Challan Revenue System</h3>
+                <p>A comprehensive system for generating revenue from challans under Smart City Corporation Davangere</p>
+                <div class="tech-stack">
+                    <span>HTML</span>
+                    <span>CSS</span>
+                    <span>JavaScript</span>
+                    <span>PHP</span>
+                    <span>MongoDB</span>
+                </div>
+            </div>
+
+            <div class="project-card" data-aos="fade-up">
+                <h3>Aptified</h3>
+                <p>Blockchain-integrated aptitude test system ensuring transparency and immutability</p>
+                <div class="tech-stack">
+                    <span>Ethereum</span>
+                    <span>Smart Contracts</span>
+                    <span>Node.js</span>
+                    <span>Truffle</span>
+                    <span>MetaMask</span>
+                </div>
+            </div>
+
+            <div class="project-card" data-aos="fade-up">
+                <h3>Query Plus</h3>
+                <p>NLP-powered data exploration tool with dynamic visualizations</p>
+                <div class="tech-stack">
+                    <span>SQL</span>
+                    <span>Python</span>
+                    <span>NLTK</span>
+                    <span>Chart.js</span>
+                </div>
+            </div>
+            <div class="project-card" data-aos="fade-up">
+                <h3>Lingua-Connect</h3>
+                <p>An interactive online platform connecting language learners with tutors.</p>
+                <div class="tech-stack">
+                    <span>HTML</span>
+                    <span>CSS</span>
+                    <span>JavaScript</span>
+                    <span>PHP</span>
+                    <span>XAMPP</span>
+                </div>
+            </div>
+            <div class="project-card" data-aos="fade-up">
+                <h3>MedBox</h3>
+                <p>Smart medication dispenser using IoT and proximity sensors</p>
+                <div class="tech-stack">
+                    <span>IoT</span>
+                    <span>Arduino</span>
+                    <span>Sensors</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="certifications">
+        <h2 class="section-title" data-aos="fade-up">Certifications & Achievements</h2>
+        <div class="certifications-grid">
+            <div class="certification-card" data-aos="fade-up">
+                <h3 class="cert-title" onclick="toggleCertificate('sih-cert')">🏆 SIH 2024 Winner</h3>
+                <p>Smart India Hackathon - Team Lead Winner</p>
+                <div class="certificate-container" id="sih-cert">
+                    <img src="sih-certificate.jpg" alt="SIH 2024 Certificate" class="certification-images">
+                </div>
+            </div>
+            <div class="certification-card" data-aos="fade-up">
+                <h3 class="cert-title" onclick="toggleCertificate('encrypt-cert')">🏆 Encrypt-24</h3>
+                <p>1st Place in IdeaTank</p>
+                <div class="certificate-container" id="encrypt-cert">
+                    <img src="encrypt-certificate.jpg" alt="Encrypt-24 Certificate" class="certification-images">
+                </div>
+            </div>
+            <div class="certification-card" data-aos="fade-up">
+                <h3 class="cert-title" onclick="toggleCertificate('fkcci-cert')">📜 FKCCI</h3>
+                <p>Innovation and Business Idea Presentation</p>
+                <div class="certificate-container" id="fkcci-cert">
+                    <img src="fkcci-certificate.jpg" alt="FKCCI Certificate" class="certification-images">
+                </div>
+            </div>
+            <div class="certification-card" data-aos="fade-up">
+                <h3 class="cert-title" onclick="toggleCertificate('gmu-cert')">📜 Website for GMU Vocational Training</h3>
+                <p>School of Vocational Training Website Development</p>
+                <div class="certificate-container" id="gmu-cert">
+                    <img src="gmu-certificate.jpg" alt="GMU Website Certificate" class="certification-images">
+                </div>
+            </div>
+            <div class="certification-card" data-aos="fade-up">
+                <h3 class="cert-title" onclick="toggleCertificate('powerbi-cert')">📜 Microsoft Power BI</h3>
+                <p>30-Day Course Completion</p>
+                <div class="certificate-container" id="powerbi-cert">
+                    <img src="powerbi-certificate.jpg" alt="Microsoft Power BI Certificate" class="certification-images">
+                </div>
+                </div>
+                <div class="certification-card" data-aos="fade-up">
+                    <h3 class="cert-title" onclick="toggleCertificate('cisco-cert')">📜 Cisco Cybersecurity</h3>
+                    <p>Introduction to Cybersecurity - Cisco Networking Academy</p>
+                    <div class="certificate-container" id="cisco-cert">
+                        <img src="cisco-certificate.jpg" alt="Cisco Cybersecurity Certificate" class="certification-images">
+                    </div>
+            </div>
+            <div class="certification-card" data-aos="fade-up">
+                <h3 class="cert-title" onclick="toggleCertificate('sukalpa-cert')">🏆 SUKALPA TechMaze</h3>
+                <p>Event Coordinator - Technical Fest 2024</p>
+                <div class="certificate-container" id="sukalpa-cert">
+                    <img src="sukalpa-certificate.jpg" alt="SUKALPA TechMaze Certificate" class="certification-images">
+                </div>
+            </div>
+            <div class="certification-card" data-aos="fade-up">
+                <h3 class="cert-title" onclick="toggleCertificate('accenture-cert')">📜 Accenture Forage</h3>
+                <p>Data Analytics and Visualization Job Simulation</p>
+                <div class="certificate-container" id="accenture-cert">
+                    <img src="accenture-certificate.jpg" alt="Accenture Forage Certificate" class="certification-images">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resume" class="resume-section">
+        <section id="experience" class="experience">
+            <h2 class="section-title" data-aos="fade-up">Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-up">
+                    <h3>Google Developer Student Clubs</h3>
+                    <p>Core Plus Member</p>
+                    <p>2023 - Present</p>
+                </div>
+                <div class="timeline-item" data-aos="fade-up">
+                    <h3>DevTown</h3>
+                    <p>Campus Ambassador</p>
+                    <p>2023 - Present</p>
+                </div>
+                <div class="timeline-item" data-aos="fade-up">
+                    <h3>GM Institute of Technology</h3>
+                    <p>Forum Coordinator</p>
+                    <p>2022 - Present</p>
+                </div>
+                <div class="timeline-item" data-aos="fade-up">
+                    <h3>TERAPIE (TeraSoft Pvt Ltd.)</h3>
+                    <p>Smart City, Davangere</p>
+                    <p>Jan 2024 - Aug 2024</p>
+                </div>
+                <div class="timeline-item" data-aos="fade-up">
+                    <h3>GMU in collaboration with Luxoft</h3>
+                    <p>AUTOSAR Technology</p>
+                    <p>Jan 2025 - May 2025</p>
+                </div>
+                <div class="timeline-item" data-aos="fade-up">
+                    <h3>InternPe</h3>
+                    <p>Web Development, Davangere</p>
+                    <p>Oct 2023 - Nov 2023</p>
+                </div>
+                <div class="timeline-item" data-aos="fade-up">
+                    <h3>Cyber Sena RND India Pvt Ltd</h3>
+                    <p>Cybersecurity & Penetration Testing</p>
+                </div>
+            </div>
+        </section>
+        <div class="timeline">
+            <div class="timeline-item" data-aos="fade-up">
+                <h3>TERAPIE (TeraSoft Pvt Ltd.)</h3>
+                <p>Smart City, Davangere</p>
+                <p>Jan 2024 - Aug 2024</p>
+            </div>
+            <div class="timeline-item" data-aos="fade-up">
+                <h3>GMU in collaboration with Luxoft</h3>
+                <p>AUTOSAR Technology</p>
+                <p>Jan 2025 - May 2025</p>
+            </div>
+            <div class="timeline-item" data-aos="fade-up">
+                <h3>InternPe</h3>
+                <p>Web Development, Davangere</p>
+                <p>Oct 2023 - Nov 2023</p>
+            </div>
+            <div class="timeline-item" data-aos="fade-up">
+                <h3>Cyber Sena RND India Pvt Ltd</h3>
+                <p>Cybersecurity & Penetration Testing</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="contact" class="contact">
+        <h2 class="section-title" data-aos="fade-up">Contact Me</h2>
+        <div class="contact-form" data-aos="fade-up">
+            <form id="contactForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Suhail Khan. All rights reserved.</p>
+    </footer>
+
+
+    <!-- Keep your existing scripts -->
+</body>
+
+
+ <script src="script.js"></script>
+</html>
